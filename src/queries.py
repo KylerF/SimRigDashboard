@@ -8,10 +8,8 @@ active_driver_query = gql(
     '''
     subscription ActiveDriver {
         activeDriver {
-            id
             name
             nickname
-            profilePic
         }
     }
     '''

@@ -40,10 +40,8 @@ data = {
         'Gear': 0,
     },
     'active_driver': {
-        'id': 0,
         'name': '',
         'nickname': '',
-        'profilePic': '',
     },
 }
 
