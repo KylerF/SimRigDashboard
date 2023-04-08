@@ -4,18 +4,21 @@ data.
 '''
 from gql.transport.websockets import WebsocketsTransport
 from gql.transport.exceptions import TransportQueryError
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 from gql import Client
 import logging
 import asyncio
 import backoff
+import os
 
 from queries import active_driver_query, iracing_query
 
-config = dotenv_values(".env")
+# Load environment variables from .env file. If no .env file is found, the
+# environment variables will be loaded from the system environment.
+load_dotenv()
 
 # Configure application logging
-logging.basicConfig(level=config.get('LOG_LEVEL', 'INFO'))
+logging.basicConfig(level=os.getenv('LOG_LEVEL', 'INFO'))
 log = logging.getLogger(__name__)
 
 # Disable transport level debug logs from gql and asyncio
@@ -24,10 +27,10 @@ logging.getLogger('asyncio').setLevel(logging.WARNING)
 logging.getLogger('gql').setLevel(logging.WARNING)
 
 # Configure GraphQL connection for subscriptions
-ws_transport = WebsocketsTransport(url=f'ws://{config.get("API_HOST", "localhost")}:{config.get("API_PORT", 8000)}/graphql')
-ws_client = Client(
-    transport=ws_transport,
-)
+host = os.getenv('API_HOST', 'localhost')
+port = os.getenv('API_PORT', 8000)
+ws_transport = WebsocketsTransport(url=f'ws://{host}:{port}/graphql')
+ws_client = Client(transport=ws_transport)
 
 # Dictionary containing up-to-date iRacing and active driver data
 data = {
