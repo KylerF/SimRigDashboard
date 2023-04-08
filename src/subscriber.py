@@ -57,15 +57,19 @@ def update_active_driver(new_data):
     '''
     data['active_driver'] = new_data
 
-async def iracing_subscription(session):
+async def iracing_subscription(session: Client):
     '''
     Results are returned each time a new iRacing data frame is available (30 FPS
     or framerate specified in subscription query)
     '''
     log.info('Subscribing to iRacing data')
+    fps = int(os.getenv('IRACING_FPS', 30))
 
     try:
-        async for result in session.subscribe(iracing_query):
+        async for result in session.subscribe(
+            iracing_query,
+            variable_values={'fps': fps}
+        ):
             log.debug(f'iRacing: {result}')
             update_iracing_data(result['iracing'])
     except TransportQueryError:
@@ -75,7 +79,7 @@ async def iracing_subscription(session):
         )
         return
 
-async def active_driver_subscription(session):
+async def active_driver_subscription(session: Client):
     '''
     Start listening for active driver changes
     '''

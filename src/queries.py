@@ -1,5 +1,5 @@
 '''
-Defines static GraphQL queries and subscriptions for the iRacing GraphQL API.
+Defines static GraphQL queries and subscriptions for the SimRig GraphQL API.
 '''
 from gql import gql
 
@@ -18,8 +18,8 @@ active_driver_query = gql(
 # Specify desired iRacing data variables in this query
 iracing_query = gql(
     '''
-    subscription IracingData {
-        iracing {
+    subscription IracingData($fps: Int) {
+        iracing(fps: $fps) {
             Speed
             RPM
             Gear
