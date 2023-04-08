@@ -33,6 +33,9 @@ def run():
         speed = iracing_data['Speed']
         rpm = iracing_data['RPM']
         gear = iracing_data['Gear']
+        speed = round(speed, 2)
+        rpm = round(rpm, 2)
+        gear = gear
 
         font = pygame.font.SysFont('Arial', 24)
         speed_text = font.render(f'Speed: {speed}', True, 'white')
