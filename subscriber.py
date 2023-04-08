@@ -29,8 +29,6 @@ ws_client = Client(
     transport=ws_transport,
 )
 
-event_loop = asyncio.get_event_loop()
-
 # Dictionary containing up-to-date iRacing and active driver data
 data = {
     'iracing': {
@@ -105,19 +103,15 @@ async def subscribe_to_data():
         active_driver_task = asyncio.create_task(
             active_driver_subscription(session)
         )
+
         await asyncio.gather(iracing_task, active_driver_task)
 
 def start():
     '''
-    Starts the asyncio event loop
+    Start the event loop
     '''
-    event_loop.run_until_complete(subscribe_to_data())
+    asyncio.run(subscribe_to_data())
 
-def stop():
-    '''
-    Stops the asyncio event loop
-    '''
-    event_loop.stop()
 
 if __name__ == '__main__':
     start()
