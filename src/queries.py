@@ -23,6 +23,9 @@ iracing_query = gql(
             Speed
             RPM
             Gear
+            DriverInfo {
+                DriverCarRedLine
+            }
         }
     }
     '''
