@@ -38,9 +38,14 @@ data = {
         'Speed': 0,
         'RPM': 0,
         'Gear': 0,
+        'DriverInfo': {
+            'DriverCarRedLine': 0,
+        }
     },
+
     'active_driver': {
         'name': '',
+        'last_name': '',
         'nickname': '',
     },
 }
